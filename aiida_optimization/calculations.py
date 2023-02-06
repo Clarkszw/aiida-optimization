@@ -3,25 +3,25 @@ from aiida.engine import CalcJob
 from aiida.orm import SinglefileData
 
 class OptCalculation(CalcJob):
-    """AiiDA calculation plugin wrapping the diff executable."""
+    """AiiDA calculation plugin for optimization by PsSCF"""
 
     @classmethod
     def define(cls, spec):
         """Define inputs and outputs of the calculation."""
         # yapf: disable
-        super(DiffCalculation, cls).define(spec)
+        super(OptCalculation, cls).define(spec)
 
         # new ports
-        spec.input('file1', valid_type=SinglefileData, help='First file to be compared.')
-        spec.input('file2', valid_type=SinglefileData, help='Second file to be compared.')
-        spec.output('diff', valid_type=SinglefileData, help='diff between file1 and file2.')
+        spec.input('atom', valid_type=SinglefileData, help='Atom structure in .xyz')
+        spec.input('basis', valid_type=str, help='Basis set for the calculation')
+        spec.output('atom_coords', valid_type=str, help='Optmized structure')
         
-        spec.input('metadata.options.output_filename', valid_type=str, default='patch.diff')
+        spec.input('metadata.options.output_filename', valid_type=str, default='optimized')
         spec.inputs['metadata']['options']['resources'].default ={
                 'num_machines': 1,
                 'num_mpiprocs_per_machine': 1,
                 }
-        spec.inputs['metadata']['options']['parser_name'].default = 'diff-tutorial'
+        spec.inputs['metadata']['options']['parser_name'].default = 'Optimization'
 
         spec.exit_code(300, 'ERROR_MISSING_OUTPUT_FILES',
                 message='Calculation did not produce all expected output files.')
