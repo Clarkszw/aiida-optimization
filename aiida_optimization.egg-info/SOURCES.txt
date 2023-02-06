@@ -1,0 +1,9 @@
+README.md
+setup.py
+aiida_optimization/calculations.py
+aiida_optimization/parsers.py
+aiida_optimization.egg-info/PKG-INFO
+aiida_optimization.egg-info/SOURCES.txt
+aiida_optimization.egg-info/dependency_links.txt
+aiida_optimization.egg-info/entry_points.txt
+aiida_optimization.egg-info/top_level.txt

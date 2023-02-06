@@ -1,0 +1,6 @@
+[aiida.calculations]
+optimization = aiida_optimiaztion.calculations:OptCalculation
+
+[aiida.parsers]
+optimization = aiida_optimization.parsers:OptParser
+
