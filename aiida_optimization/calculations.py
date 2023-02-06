@@ -1,6 +1,8 @@
 from aiida.common import datastructures
 from aiida.engine import CalcJob
-from aiida.orm import SinglefileData
+from aiida.orm import SinglefileDatai
+from pyscf import gto,scf
+from pyscf.geomopt.berny_solver import optimize
 
 class OptCalculation(CalcJob):
     """AiiDA calculation plugin for optimization by PsSCF"""
@@ -35,23 +37,26 @@ class OptCalculation(CalcJob):
             all the calculation.
         :return: `aiida.common.datastructures.CalcInfo` instance
         """
-        codeinfo = datastructures.CodeInfo()
-        codeinfo.cmdline_params = [self.inputs.file1.filename, self.inputs.file2.filename]
-        codeinfo.code_uuid = self.inputs.code.uuid
-        codeinfo.stdout_name = self.metadata.options.output_filename
+        #codeinfo = datastructures.CodeInfo()
+        #codeinfo.cmdline_params = [self.inputs.atom.filename, self.inputs.file2.filename]
+        #codeinfo.code_uuid = self.inputs.code.uuid
+        #codeinfo.stdout_name = self.metadata.options.output_filename
+        mol = gto.M(atom=self.inputs.atom.filename, basis = self.inputs.basis)
+        mf = scf.RHF(mol)
+        moq_eq = optimize(mf, maxstep = 100)
 
         # Prepare a `CalcInfo` to be returned to the engine
-        calcinfo = datastructures.CalcInfo()
-        calcinfo.codes_info = [codeinfo]
-        calcinfo.local_copy_list = [
-                (self.inputs.file1.uuid, self.inputs.file1.filename, self.inputs.file1.filename),
-                (self.inputs.file2.uuid, self.inputs.file2.filename, self.inputs.file2.filename),
-        ]
-        calcinfo.retrieve_list = [self.metadata.options.output_filename]
+        #calcinfo = datastructures.CalcInfo()
+        #calcinfo.codes_info = [codeinfo]
+        #calcinfo.local_copy_list = [
+        #        (self.inputs.file1.uuid, self.inputs.file1.filename, self.inputs.file1.filename),
+        #        (self.inputs.file2.uuid, self.inputs.file2.filename, self.inputs.file2.filename),
+        #]
+        #calcinfo.retrieve_list = [self.metadata.options.output_filename]
 
         # with folder.open("filename", 'w') as handle:
         #   handle.write("file content")
 
-        return calcinfo
+        #return calcinfo
 
 
