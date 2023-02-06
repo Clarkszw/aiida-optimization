@@ -3,7 +3,7 @@ from aiida.orm import SinglefileData
 from aiida.parsers.parser import Parser
 from aiida.plugins import CalculationFactory
 
-DiffCalculation = CalculationFactory('diff-tutorial')
+OptCalculation = CalculationFactory('optimization')
 
 class OptParser(Parser):
     
@@ -28,6 +28,6 @@ class OptParser(Parser):
         self.logger.info(f"Parsing '{output_filename}'")
         with self.retrieved.open(output_filename, 'rb') as handle:
             output_node = SinglefileData(file=handle)
-        self.out('diff', output_node)
+        self.out('atom_coords', output_node)
 
         return ExitCode(0)
