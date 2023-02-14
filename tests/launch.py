@@ -18,10 +18,10 @@ except NotExistent:
 
 # Set up inputs
 builder = code.get_builder()
-builder.atom = orm.SinglefileData(file=INPUT_DIR / 'N2')
+builder.atom = orm.SinglefileData(file=INPUT_DIR / 'N2.xyz')
 # String = orm.DataFactory("string")
 # builder.basis = String(input_string = "ccpvdz").store()
-builder.basis = Str("ccpvdz")
+builder.basis = orm.Str("ccpvdz")
 builder.metadata.description = 'Test job submission with the optimization plugin'
 
 # Run the calculation & parse results

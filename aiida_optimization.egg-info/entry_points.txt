@@ -1,5 +1,5 @@
 [aiida.calculations]
-optimization = aiida_optimiaztion.calculations:OptCalculation
+optimization = aiida_optimization.calculations:OptCalculation
 
 [aiida.parsers]
 optimization = aiida_optimization.parsers:OptParser
